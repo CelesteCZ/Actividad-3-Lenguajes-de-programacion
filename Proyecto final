@@ -1,0 +1,56 @@
+/******************************************************************************
+Maria Celeste Castillo Zavala
+*******************************************************************************/
+#include <iostream>
+#include <cctype>
+using namespace std;
+/*Definimos variables como cadenas de cararcter*/
+int main() {
+	string nombre,apellidoP,apellidoM,rfc1,rfc2,rfc3,rfc4,dia,Mes,Anio,RFCinconveniente,palabrafinal;
+	std::cout << "Ingrese el nombre: "; /*Usuario debe ingresar el nombre*/
+	std::getline(std::cin, nombre); /*Guardamos la variable nombre*/
+	rfc1= nombre.substr(0, 1);  /*Sustraemos la primer letra de su nombre*/
+	std::cout << "Ingrese el apellido paterno: "; /*Usuario debe ingresar el nombre*/
+	std::getline(std::cin, apellidoP); 
+	rfc2= apellidoP.substr(0, 1); /*Sustraemos la primera letra de su apellido paterno*/
+    rfc3= apellidoP.substr(1, 1); /*Sustraemos la segunda letra de su apelido paterno*/
+	std::cout << "Ingrese el apellido materno (si no tiene dar Enter): ";
+	apellidoM = (!apellidoM.empty()) ? apellidoM[0] : 'X'; /*Si no hay apellido materno sustituirlo por X*/
+	std::getline(std::cin, apellidoM);
+	if(apellidoM==""){
+            apellidoM="X";
+        }
+	rfc4= apellidoM.substr(0, 1); /*Sustraemos la primera letra de su apellido materno*/
+	std::cout << "Ingrese fecha de nacimiento (ingrese solo números)\n"; /*Mensaje de advertencia*/
+    std::cout << "Dia (2 digitos): "; /*Usuario debe ingresar su dia de nacimeinto*/
+    std::getline(std::cin, dia);
+    std::cout << "Mes (2 digitos): "; /*Usuario debe ingresar su mes de nacimiento*/
+    std::getline(std::cin, Mes);
+    std::cout << "Año (4 digitos): "; /*Usuario debe ingresar su año de nacimeinto*/
+    std::getline(std::cin, Anio);
+    Anio= Anio.substr(2, 2); /*Al ingresar el usuario 4 digitos sustraemos los ultimos 2*/
+        /*La primera condicion si la segunda letra no es vocal deberá sustituirla por una X, usamos un ciclo para que lea letra por letra*/
+	    for(int i=0; i<rfc3.length(); i++) {
+		char letran=rfc3[i];
+		    if (letran=='A'|| letran=='E'|| letran=='I'|| letran=='O'|| letran=='U'||letran=='a'||letran=='e'||letran=='i'||letran=='o'||letran=='u') {
+		    }
+	       	else
+	       	rfc3[i]='X';
+  }
+        /*Usamos un ciclo para cambiar las letras minusculas en mayusuclas esto para verse mas estetico, lo guardamos en la variable palabra final*/
+        for (char c : rfc2+rfc3+rfc4+rfc1) { 
+                palabrafinal += toupper(c);
+        }
+        /*Usamos una condicion cuando las 4 letras formen una palabra grosera la reemplace la primera letra del nombre por una X*/
+        if(palabrafinal=="MULA"||palabrafinal=="PUTO"||palabrafinal=="PUTA"||palabrafinal=="CULO"||palabrafinal=="SEXO"||palabrafinal=="PENE"||palabrafinal=="PITO"||palabrafinal=="JOTO"){
+            rfc1="X";
+            /*Sustraemos las primeras 3 letras de la palabra grosera y agreamos la nueva letra con la X*/
+            RFCinconveniente= palabrafinal.substr(0, 3);
+            std::cout <<"Tu RFC sin homoclave es: " <<RFCinconveniente<<rfc1<<Anio<<Mes<<dia<<"XXX"<<endl; 
+        }
+        /*Si no tiene palabras groseras solo imprimirá el  RFC correcto*/
+            else
+        std::cout <<"Tu RFC sin homoclave es: " <<palabrafinal<<Anio<<Mes<<dia<<"XXX"<<endl;
+    
+	return 0;
+}
